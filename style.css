@@ -188,3 +188,18 @@ footer {
     background-color: #2563eb;
 }
 
+#royhatlar ol li, #royhatlar ul li{
+    margin: 6px 0; 
+    line-height: 1.5;
+}
+
+#royhatlar dl dd{
+   color: #222;
+   margin-top: 10px;
+
+}
+
+#royhatlar dl dd{
+    margin-left: 15px;
+    color: #444;
+}
