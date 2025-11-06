@@ -1,1 +1,0 @@
-# qazna_web_projekt
