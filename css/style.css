@@ -1,0 +1,174 @@
+/* Umumiy uslublar */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+/* ... (Barcha eski CSS qoidalari, masalan header, nav, mahsulotlar-grid, form uslublari saqlanadi) ... */
+
+h1, h2, h3 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Header va Navigatsiya (CSS Flexbox) --- */
+.header {
+    background-color: #fff;
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    position: sticky; 
+    top: 0;
+    z-index: 100;
+}
+/* ... (nav, savat-btn qoidalari saqlanadi) ... */
+.savat-btn {
+    background-color: #28a745; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* CSS transition */
+}
+.savat-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* --- Asosiy kontent va Grid --- */
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.mahsulotlar-grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 25px;
+    padding-top: 10px;
+}
+.mahsulot-karta {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+.mahsulot-karta img {
+    /* Rasm qoyish uchun */
+    width: 100%; 
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.qolgan-soni {
+    font-weight: bold;
+    color: #dc3545;
+    margin: 10px 0;
+}
+
+/* --- Forma elementlari --- */
+/* INPUT, TEXTAREA, SELECT uchun uslublar */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.buyurtma-form input[type="text"],
+.buyurtma-form input[type="tel"],
+.buyurtma-form select,
+.buyurtma-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /* CSS transition */
+    transition: border-color 0.3s ease; 
+}
+.buyurtma-form input:focus,
+.buyurtma-form select:focus,
+.buyurtma-form textarea:focus {
+    border-color: #007bff; /* Focus bo'lganda rang o'zgarishi */
+    outline: none;
+}
+/* ... (qolgan forma uslublari) ... */
+
+/* --- Yangi: Modal (Mahsulot turlari) uslubi --- */
+.modal {
+    position: fixed; /* Oynani ekranda ushlab turish */
+    z-index: 200; /* Boshqa elementlardan ustun turishi */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fonni xiralashtirish */
+    /* CSS transition va animatsiya */
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+}
+
+.modal.ochiq {
+    opacity: 1;
+}
+
+.modal-kontent {
+    background-color: #fefefe;
+    margin: 10% auto; /* Markazga yaqin joylash */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 1000px;
+    border-radius: 10px;
+    position: relative;
+    /* CSS animatsiya elementlarini yaratish */
+    animation: slidedown 0.5s; 
+}
+
+@keyframes slidedown {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+.yopish-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.yopish-btn:hover,
+.yopish-btn:focus {
+    color: #000;
+    text-decoration: none;
+}
+.yashirin {
+    display: none;
+}
+
+/* --- Media Queries orqali Responsiv dizayn --- */
+@media (max-width: 768px) {
+    /* ... (Media query qoidalari saqlanadi) ... */
+    .modal-kontent {
+        width: 95%;
+        margin: 5% auto;
+    }
+}
