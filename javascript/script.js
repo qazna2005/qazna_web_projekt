@@ -7,8 +7,8 @@ const mahsulotlarOmbori = [
         rasm: "x2.jpg", // Umumiy rasm qoyish uchun (Asosiy kartada)
         turlar: [
             { id: 11, nomi: "Samsung RB30", narxi: 7500000, qolgan: 5, tavsif: "Inverter, No Frost, 300L", variantRasm: "x7.jpg" }, // Alohida rasm
-            { id: 12, nomi: "LG B507", narxi: 8900000, qolgan: 2, tavsif: "DoorCooling+, Wi-Fi boshqaruv", variantRasm: "muzlatgich_lg.jpg" },           // Alohida rasm
-            { id: 13, nomi: "Artel HD400", narxi: 5500000, qolgan: 8, tavsif: "Oddiy, katta sig'im", variantRasm: "muzlatgich_artel.jpg" }             // Alohida rasm
+            { id: 12, nomi: "LG B507", narxi: 8900000, qolgan: 2, tavsif: "DoorCooling+, Wi-Fi boshqaruv", variantRasm: "x2.jpg" },           // Alohida rasm
+            { id: 13, nomi: "Artel HD400", narxi: 5500000, qolgan: 8, tavsif: "Oddiy, katta sig'im", variantRasm: "x6.jpg" }             // Alohida rasm
         ]
     },
     // Asosiy guruh: Kir Yuvish Mashinalari
@@ -27,8 +27,8 @@ const mahsulotlarOmbori = [
         nomi: "Televizorlar", 
         rasm: "tv3.jpg", 
         turlar: [
-            { id: 31, nomi: "Samsung QLED 55''", narxi: 12000000, qolgan: 4, tavsif: "4K, Smart TV", variantRasm: " tv.jpg" },
-            { id: 32, nomi: "Artel LED 43''", narxi: 3500000, qolgan: 10, tavsif: "Full HD, Oddiy", variantRasm: "tv_artel.jpg" }
+            { id: 31, nomi: "Samsung QLED 55''", narxi: 12000000, qolgan: 4, tavsif: "4K, Smart TV", variantRasm: "tv.jpg" },
+            { id: 32, nomi: "Artel LED 43''", narxi: 3500000, qolgan: 10, tavsif: "Full HD, Oddiy", variantRasm: "tv1.jpg" }
         ]
     },
      { 
@@ -36,9 +36,9 @@ const mahsulotlarOmbori = [
         nomi: "Notebook", 
         rasm: "komp4.jpg", 
         turlar: [
-            { id: 41, nomi: "Chuwi HeroBook Plus''", narxi: 2499000, qolgan: 4, tavsif: "Windows, Intel Celeron N4020", variantRasm: "nt.jpg" },
+            { id: 41, nomi: "Chuwi HeroBook Plus''", narxi: 2499000, qolgan: 4, tavsif: "Windows, Intel Celeron N4020", variantRasm: "kompp.jpg" },
             { id: 42, nomi: "Acer''", narxi: 4500000, qolgan: 10, tavsif: "Winwods, Intel Celeron N12305", variantRasm: "komp4.jpg" },
-             { id: 43, nomi: "Chuwi GemiBook Plus''", narxi: 2799000, qolgan: 10, tavsif: "Windows, Intel N100", variantRasm: "nt1.jpg" }
+             { id: 43, nomi: "Chuwi GemiBook Plus''", narxi: 2799000, qolgan: 10, tavsif: "Windows, Intel N100", variantRasm: "komp.jpg" }
         ]
     },
      { 
@@ -46,37 +46,13 @@ const mahsulotlarOmbori = [
         nomi: "Telefonlar", 
         rasm: "tel4.jpg", 
         turlar: [
-            { id: 51, nomi: "Iphone''", narxi: 12000000, qolgan: 4, tavsif: "4K, Smart TV", variantRasm: "tel4.jpg" },
-            { id: 52, nomi: "Honor 400 Lite''", narxi: 3500000, qolgan: 10, tavsif: "Full HD, Oddiy", variantRasm: "tel4.jpg" }
+            { id: 51, nomi: "Iphone 13 Pro''", narxi: 7000000, qolgan: 4, tavsif: "4K, Smart TV", variantRasm: "tel9.jpg" },
+            { id: 52, nomi: "Honor 400 Lite''", narxi: 3950000, qolgan: 10, tavsif: "Xotira: 8/256 GB", variantRasm: "tel7.jpg" },
+            { id: 53, nomi: "Iphone 15 Pro Max''", narxi: 9000000, qolgan: 10, tavsif: "Xotira:8/256 GB", variantRasm: "tel10.jpg" }
+       
         ]
     },
-     { 
-        id:60, 
-        nomi: "Televizorlar", 
-        rasm: "tv3.jpg", 
-        turlar: [
-            { id: 61, nomi: "Samsung QLED 55''", narxi: 12000000, qolgan: 4, tavsif: "4K, Smart TV", variantRasm: " tv.jpg" },
-            { id: 62, nomi: "Artel LED 43''", narxi: 3500000, qolgan: 10, tavsif: "Full HD, Oddiy", variantRasm: "tv_artel.jpg" }
-        ]
-    },
-     { 
-        id: 70, 
-        nomi: "Televizorlar", 
-        rasm: "tv3.jpg", 
-        turlar: [
-            { id: 71, nomi: "Samsung QLED 55''", narxi: 12000000, qolgan: 4, tavsif: "4K, Smart TV", variantRasm: " tv.jpg" },
-            { id: 72, nomi: "Artel LED 43''", narxi: 3500000, qolgan: 10, tavsif: "Full HD, Oddiy", variantRasm: "tv_artel.jpg" }
-        ]
-    },
-     { 
-        id: 80, 
-        nomi: "Televizorlar", 
-        rasm: "tv3.jpg", 
-        turlar: [
-            { id: 31, nomi: "Samsung QLED 55''", narxi: 12000000, qolgan: 4, tavsif: "4K, Smart TV", variantRasm: " tv.jpg" },
-            { id: 32, nomi: "Artel LED 43''", narxi: 3500000, qolgan: 10, tavsif: "Full HD, Oddiy", variantRasm: "tv_artel.jpg" }
-        ]
-    },
+     
 ];
 
 // --- Global o'zgaruvchilar va DOM elementlari ---
