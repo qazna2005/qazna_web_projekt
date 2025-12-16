@@ -1,17 +1,51 @@
-// --- JSON formatda ma'lumotlar to'plami (Variant rasmlari kiritilgan) ---
+let savat = [];
+
+const savatItemsList = document.getElementById('savat-items');
+const jamiNarxElement = document.getElementById('jami-narx');
+const savatOchishBtn = document.getElementById('savat-ochish-btn');
+const savatSection = document.getElementById('savat');
+const buyurtmaForma = document.getElementById('buyurtma-form');
+
+const modal = document.getElementById('mahsulot-modal');
+const modalBody = document.getElementById('modal-body');
+const modalSarlavha = document.getElementById('modal-sarlavha');
+const yopishBtn = document.querySelector('.yopish-btn');
+
+
+const muzlatgichlarJSON = {
+    "id": 10,
+    "nomi": "Muzlatgichlar",
+    "turlar": [
+        {
+            "id": 11,
+            "nomi": "Samsung RB30",
+            "narxi": 7500000,
+            "qolgan": 5,
+            "tavsif": "Inverter, No Frost, 300L",
+            "variantRasm": "x7.jpg"
+        },
+        {
+            "id": 12,
+            "nomi": "LG B507",
+            "narxi": 8900000,
+            "qolgan": 2,
+            "tavsif": "DoorCooling+, Wi-Fi boshqaruv",
+            "variantRasm": "x2.jpg"
+        },
+        {
+            "id": 13,
+            "nomi": "Artel HD400",
+            "narxi": 5500000,
+            "qolgan": 8,
+            "tavsif": "Oddiy, katta sig'im",
+            "variantRasm": "x6.jpg"
+        }
+    ]
+};
 const mahsulotlarOmbori = [
-    // Asosiy guruh: Muzlatgichlar
-    { 
-        id: 10, 
-        nomi: "Muzlatgichlar", 
-        rasm: "x2.jpg", // Umumiy rasm qoyish uchun (Asosiy kartada)
-        turlar: [
-            { id: 11, nomi: "Samsung RB30", narxi: 7500000, qolgan: 5, tavsif: "Inverter, No Frost, 300L", variantRasm: "x7.jpg" }, // Alohida rasm
-            { id: 12, nomi: "LG B507", narxi: 8900000, qolgan: 2, tavsif: "DoorCooling+, Wi-Fi boshqaruv", variantRasm: "x2.jpg" },           // Alohida rasm
-            { id: 13, nomi: "Artel HD400", narxi: 5500000, qolgan: 8, tavsif: "Oddiy, katta sig'im", variantRasm: "x6.jpg" }             // Alohida rasm
-        ]
-    },
-    // Asosiy guruh: Kir Yuvish Mashinalari
+   muzlatgichlarJSON,
+
+    
     { 
         id: 20, 
         nomi: "Kir Yuvish Mashinalari", 
@@ -55,234 +89,90 @@ const mahsulotlarOmbori = [
      
 ];
 
-// --- Global o'zgaruvchilar va DOM elementlari ---
-let savat = []; 
 
-const mahsulotlarList = document.getElementById('mahsulotlar-list');
-const savatItemsList = document.getElementById('savat-items');
-const jamiNarxElement = document.getElementById('jami-narx');
-const savatOchishBtn = document.getElementById('savat-ochish-btn');
-const savatSection = document.getElementById('savat');
-const buyurtmaForma = document.getElementById('buyurtma-form');
 
-const modal = document.getElementById('mahsulot-modal');
-const modalBody = document.getElementById('modal-body');
-const modalSarlavha = document.getElementById('modal-sarlavha');
-const yopishBtn = document.querySelector('.yopish-btn');
-
-// --- Funksiyalar ---
-
-/**
- * Asosiy mahsulot guruhlarini sahifaga render qilish
- */
-function mahsulotlarniRenderQilish() {
-    mahsulotlarList.innerHTML = ''; 
-
-    mahsulotlarOmbori.forEach(guruh => {
-        const karta = document.createElement('div');
-        karta.className = 'mahsulot-karta'; 
-        
-        const jamiQolgan = guruh.turlar.reduce((sum, tur) => sum + tur.qolgan, 0);
-
-        karta.innerHTML = `
-            <img src="../images/${guruh.rasm}" alt="${guruh.nomi}">
-            <h3>${guruh.nomi}</h3>
-            <p><strong>Boshlang'ich Narxi:</strong> ${guruh.turlar[0].narxi.toLocaleString('uz-UZ')} UZS dan</p>
-            <p class="qolgan-soni">Jami Qolgan: ${jamiQolgan}</p>
-            
-            <button class="tugma korish-btn" data-id="${guruh.id}">Mahsulotni Ko'rish</button>
-        `;
-
-        mahsulotlarList.appendChild(karta);
-    });
-}
-
-/**
- * Savatni yangilash
- */
+// --- Savatni yangilash ---
 function savatniYangilash() {
-    savatItemsList.innerHTML = ''; 
+    savatItemsList.innerHTML = '';
     let jamiNarx = 0;
-
     if (savat.length === 0) {
         savatItemsList.innerHTML = '<li>Savat hozircha bo\'sh.</li>';
         savatOchishBtn.textContent = '🛒 Savat (0)';
     } else {
         savat.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${item.nomi} - ${item.soni} dona (Jami: ${(item.narxi * item.soni).toLocaleString('uz-UZ')} UZS)`;
-            savatItemsList.appendChild(listItem);
-            
+            const li = document.createElement('li');
+            li.textContent = `${item.nomi} - ${item.soni} dona (Jami: ${(item.narxi*item.soni).toLocaleString('uz-UZ')} UZS)`;
+            savatItemsList.appendChild(li);
             jamiNarx += item.narxi * item.soni;
         });
-
         savatOchishBtn.textContent = `🛒 Savat (${savat.length})`;
     }
-
     jamiNarxElement.textContent = jamiNarx.toLocaleString('uz-UZ') + ' UZS';
 }
 
-/**
- * Mahsulot variantini savatga qo'shish
- */
-function savatgaQoshish(variantId) {
-    let mahsulot; 
-
-    // Barcha mahsulot turlari ichidan variantni topish
-    mahsulotlarOmbori.forEach(guruh => {
-        const topilganVariant = guruh.turlar.find(t => t.id === variantId);
-        if (topilganVariant) {
-            mahsulot = topilganVariant;
-        }
-    });
-
-    if (!mahsulot) return alert("Mahsulot topilmadi.");
-
-    if (mahsulot.qolgan > 0) {
-        const savatItemIndex = savat.findIndex(item => item.id === mahsulot.id);
-
-        if (savatItemIndex > -1) {
-            savat[savatItemIndex].soni++;
-        } else {
-            savat.push({ 
-                id: mahsulot.id, 
-                nomi: mahsulot.nomi, 
-                narxi: mahsulot.narxi, 
-                soni: 1 
-            });
-        }
-        
-        // Qolgan sonini kamaytirish va DOM ni yangilash (modal ichida)
-        mahsulot.qolgan--;
-        // Elementni modal ichida yangilash
-        const qolganElement = document.getElementById(`modal-qolgan-${mahsulot.id}`);
-        if(qolganElement) qolganElement.textContent = `Qolgan: ${mahsulot.qolgan}`;
-        
-        if (mahsulot.qolgan === 0) {
-            const btn = document.querySelector(`.modal-kontent button[data-variant-id="${mahsulot.id}"]`);
-            if (btn) {
-                btn.setAttribute('disabled', 'true');
-                btn.textContent = 'Sotilgan';
-            }
-        }
-        
-        savatniYangilash(); 
-        alert(`${mahsulot.nomi} savatga qo'shildi!`);
-    } else {
-        alert('Ushbu mahsulot zaxirada qolmadi!');
-    }
-}
-
-/**
- * Tanlangan guruh mahsulot variantlarini modalda ko'rsatish
- * (Variantning alohida rasmini ishlatish uchun yangilandi)
- */
-function modalniOchish(guruhId) {
+// --- Modalni ochish ---
+function modalniOchish(guruhId){
     const guruh = mahsulotlarOmbori.find(g => g.id === guruhId);
-
-    if (!guruh) return;
-
+    if(!guruh) return;
     modalSarlavha.textContent = guruh.nomi + " Turlari";
-    modalBody.innerHTML = ''; 
-
-    guruh.turlar.forEach(tur => {
+    modalBody.innerHTML = '';
+    guruh.turlar.forEach(tur=>{
         const karta = document.createElement('div');
-        karta.className = 'mahsulot-karta'; 
-        
-        // Har bir variant uchun alohida rasm (variantRasm) ishlatiladi
-        karta.innerHTML = `
-            <img src="../images/${tur.variantRasm}" alt="${tur.nomi}"> 
+        karta.className='mahsulot-karta';
+        karta.innerHTML=`
+            <img src="images/${tur.variantRasm}" alt="${tur.nomi}">
             <h4>${tur.nomi}</h4>
             <p>${tur.tavsif}</p>
             <p><strong>Narxi:</strong> ${tur.narxi.toLocaleString('uz-UZ')} UZS</p>
             <p class="qolgan-soni" id="modal-qolgan-${tur.id}">Qolgan: ${tur.qolgan}</p>
-            
-            <button class="tugma qoshish-btn" 
-                    data-variant-id="${tur.id}"
-                    ${tur.qolgan === 0 ? 'disabled' : ''}>
-                ${tur.qolgan === 0 ? 'Sotilgan' : 'Savatga qo\'shish'}
-            </button>
+            <button class="tugma qoshish-btn" data-variant-id="${tur.id}" ${tur.qolgan===0?'disabled':''}>${tur.qolgan===0?'Sotilgan':'Savatga qo\'shish'}</button>
         `;
-
         modalBody.appendChild(karta);
     });
-
     modal.classList.remove('yashirin');
     modal.classList.add('ochiq');
 }
 
+// --- Eventlar ---
+document.querySelectorAll('.korish-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>modalniOchish(parseInt(btn.dataset.id)));
+});
 
-// --- Eventlar bilan ishlash (click, submit, change) ---
-
-// 1. Asosiy mahsulotlar ro'yxatiga event tinglovchi qo'shish (Mahsulotni Ko'rish)
-mahsulotlarList.addEventListener('click', function(e) {
-    if (e.target.classList.contains('korish-btn')) {
-        const guruhId = parseInt(e.target.dataset.id); 
-        modalniOchish(guruhId);
+modal.addEventListener('click', e=>{
+    if(e.target.classList.contains('qoshish-btn')){
+        const id = parseInt(e.target.dataset.variantId);
+        let mahsulot;
+        mahsulotlarOmbori.forEach(g=>{
+            const t=g.turlar.find(tur=>tur.id===id);
+            if(t) mahsulot=t;
+        });
+        if(!mahsulot) return alert('Mahsulot topilmadi');
+        if(mahsulot.qolgan>0){
+            let idx = savat.findIndex(i=>i.id===mahsulot.id);
+            if(idx>-1) savat[idx].soni++;
+            else savat.push({id:mahsulot.id, nomi:mahsulot.nomi, narxi:mahsulot.narxi, soni:1});
+            mahsulot.qolgan--;
+            const el=document.getElementById(`modal-qolgan-${mahsulot.id}`);
+            if(el) el.textContent=`Qolgan: ${mahsulot.qolgan}`;
+            if(mahsulot.qolgan===0) e.target.disabled=true;
+            savatniYangilash();
+            alert(`${mahsulot.nomi} savatga qo'shildi!`);
+        } else alert('Ushbu mahsulot zaxirada qolmadi!');
     }
 });
 
-// 2. Modal ichidagi tugmaga event tinglovchi qo'shish (Variantni Savatga qo'shish)
-modal.addEventListener('click', function(e) {
-    if (e.target.classList.contains('qoshish-btn')) {
-        const variantId = parseInt(e.target.dataset.variantId);
-        savatgaQoshish(variantId);
-    }
-});
+yopishBtn.addEventListener('click',()=>{modal.classList.add('yashirin'); modal.classList.remove('ochiq');});
+window.addEventListener('click', e=>{if(e.target===modal){modal.classList.add('yashirin'); modal.classList.remove('ochiq');}});
+savatOchishBtn.addEventListener('click',()=>savatSection.classList.toggle('yashirin'));
 
-// 3. Modalni yopish (Yopish tugmasi)
-yopishBtn.addEventListener('click', function() {
-    modal.classList.add('yashirin');
-    modal.classList.remove('ochiq');
-});
-
-// 4. Modalni yopish (Oynadan tashqarini bosganda)
-window.addEventListener('click', function(e) {
-    if (e.target === modal) {
-        modal.classList.add('yashirin');
-        modal.classList.remove('ochiq');
-    }
-});
-
-// 5. Savatni ochish/yopish 
-savatOchishBtn.addEventListener('click', function() {
-    savatSection.classList.toggle('yashirin');
-});
-
-// 6. Formani tekshirish va yuborish
-buyurtmaForma.addEventListener('submit', function(e) {
-    e.preventDefault(); 
-    
-    const ism = document.getElementById('ism').value.trim();
-    const telefon = document.getElementById('telefon').value.trim();
-    const viloyat = document.getElementById('viloyat').value; 
-
-    if (savat.length === 0) {
-        alert("Iltimos, avval savatga mahsulot qo'shing!");
-        return;
-    }
-
-    if (ism === "" || telefon === "" || viloyat === "") {
-        alert("Iltimos, barcha maydonlarni to'ldiring!");
-        return;
-    }
-
-    if (!/^[0-9]{9,}$/.test(telefon)) { 
-         alert("Telefon raqami noto'g'ri kiritilgan. Kamida 9 raqam bo'lishi kerak.");
-         return;
-    }
-
-    console.log("--- BUYURTMA QABUL QILINDI ---");
+buyurtmaForma.addEventListener('submit', e=>{
+    e.preventDefault();
+    const ism=document.getElementById('ism').value.trim();
+    const telefon=document.getElementById('telefon').value.trim();
+    const viloyat=document.getElementById('viloyat').value;
+    if(savat.length===0){alert("Iltimos, avval savatga mahsulot qo'shing!"); return;}
+    if(ism===""||telefon===""||viloyat===""){alert("Iltimos, barcha maydonlarni to'ldiring!"); return;}
+    if(!/^[0-9]{9,}$/.test(telefon)){alert("Telefon raqami noto'g'ri kiritilgan. Kamida 9 raqam bo'lishi kerak."); return;}
     alert(`Rahmat, ${ism}! Buyurtmangiz qabul qilindi. Tez orada siz bilan bog'lanamiz.`);
-
-    savat = [];
-    savatniYangilash();
-    buyurtmaForma.reset();
-    savatSection.classList.add('yashirin'); 
-});
-
-// --- Dasturni ishga tushirish ---
-document.addEventListener('DOMContentLoaded', () => {
-    mahsulotlarniRenderQilish(); 
-    savatniYangilash(); 
+    savat=[]; savatniYangilash(); buyurtmaForma.reset(); savatSection.classList.add('yashirin');
 });
